@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from 'firebase/auth';
 
-import { auth } from '../firebase/firebase';
+import { auth, db } from '../firebase/firebase';
+import { setDoc, doc } from 'firebase/firestore';
 
 const AuthContext = React.createContext();
 
@@ -28,6 +29,10 @@ export function AuthProvider({ children }) {
                 const user = userCred.user;
                 sendEmailVerification(user)
             })
+    }
+
+    function saveUserInfo(user) {
+        return setDoc(doc(db, "users", currentUser.uid), user)
     }
 
     function login(email, pass) {
@@ -61,7 +66,8 @@ export function AuthProvider({ children }) {
         logout,
         forgotPassword,
         updateUserEmail,
-        updateUserPassword
+        updateUserPassword,
+        saveUserInfo
     }
 
     return (

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { useAuth } from './context/AuthContext';
+import Signup from './components/Auth/Signup';
 
 
 function App() {
@@ -9,13 +10,17 @@ function App() {
 
   return (
     <>
-      <Container className='' style={{ minHeight: "100vh" }}>
+      <Container className='d-flex align-items-center justify-content-center' style={{ minHeight: "100vh" }}>
         <Router>
           <Routes>
             <Route exact path='/' element={<h1>Home</h1>} />
-            <Route path='/signup' element={<h1>SignUp</h1>} />
-            <Route path='/login' element={<h1>SignUp</h1>} />
-            {currentUser && <Route path='/profile' element={<h1>SignUp</h1>} />
+            <Route path='/signup' element={
+              <div style={{maxWidth: "500px",width: "100%"}}>
+                <Signup />
+              </div>
+            } />
+            <Route path='/login' element={<h1>Login</h1>} />
+            {currentUser && <Route path='/profile' element={<h1>Profile</h1>} />
             }
             {currentUser && <Route path='/main' element={<h1>Main</h1>} />
             }
